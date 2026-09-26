@@ -1,0 +1,13 @@
+sample_id,decision_id,expected,severity,kind,peer_evidence,correct,note
+BDD11,d1,car x3 occluded=false,major,decision,area/drivable | car [occluded=false;truncated=false]×3 | traffic light [occluded=false;truncated=false]×3,1,Peer vẽ đủ 3 BBox car ôm khít thân xe.
+BDD11,d2,traffic light x2 occluded=false,critical,decision,area/drivable | car [occluded=false;truncated=false]×3 | traffic light [occluded=false;truncated=false]×2,1,Peer vẽ đủ 2 traffic light trên xà ngang.
+BDD11,d3,geometry: polygon area/drivable ôm bám mép bó vỉa lệch <= 3px,minor,geometry,area/drivable | car [occluded=false;truncated=false]×3 | traffic light [occluded=false;truncated=false]×2,1,Polygon bám sát mép lòng đường lệch <= 3px.
+BDD12,d1,ESCALATE,critical,decision,lane/single other | lane/single white,1,Peer đã gắn cờ Issue UNCERTAIN_SCOPE cho vùng ngã tư mờ.
+BDD12,d2,lane/single other x1,major,decision,lane/single other | lane/single white,1,Peer vẽ 1 polyline lane/single other bám chân tam giác nhường đường.
+BDD12,d3,geometry: polyline lane/single white bám tim vạch đứt,minor,geometry,lane/single other | lane/single white,1,Polyline bám tim vạch đứt chính xác.
+BDD13,d1,lane/double white x1,critical,decision,lane/double white | pedestrian [occluded=true;truncated=false],1,Peer vẽ 1 polyline lane/double white ở giữa 2 nét vạch.
+BDD13,d2,pedestrian x1 occluded=true,critical,decision,lane/double white | pedestrian [occluded=true;truncated=false],1,Peer gán nhãn pedestrian kèm occluded=true chuẩn xác.
+BDD14,d1,lane/single yellow x1,major,decision,lane/single yellow | truck [occluded=false;truncated=true],1,Peer vẽ polyline lane/single yellow bám tim vạch mép trái.
+BDD14,d2,truck x1 occluded=false truncated=true,minor,decision,lane/single yellow | truck [occluded=false;truncated=true],1,Peer gán nhãn truck kèm truncated=true sát biên trái.
+BDD15,d1,area/drivable x1,major,decision,area/alternative | area/drivable,1,Peer tô Polygon area/drivable chuẩn lòng đường xe ego.
+BDD15,d2,area/alternative x1,minor,decision,area/alternative | area/drivable,1,Peer tô Polygon area/alternative chuẩn làn xe kế cận.

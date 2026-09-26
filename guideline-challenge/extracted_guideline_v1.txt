@@ -1,0 +1,598 @@
+Annotation guideline — Lane boundary + Drivable area (camera hành trình)
+Version: v1
+⚡ Đọc nhanh trong 60 giây
+Mỗi ảnh làm 2 việc: vẽ đường biên làn lane_boundary (polyline) và tô vùng xe được phép chạy drivable_area (polygon).
+1 vạch sơn dọc đường = 1 polyline, đặt điểm ở tâm vạch, vẽ từ dưới lên. Vạch đứt vẫn là 1 polyline liền. Vạch đôi = 1 polyline ở giữa hai vạch.
+Mép đường không có vạch sơn (bó vỉa, chân rào, mép nhựa giáp cỏ/đất) → vẽ lane_boundary với type=road_edge.
+Làn xe mình đang đi = direct. Các làn cùng chiều bên cạnh = alternative.
+KHÔNG tô: làn ngược chiều, vùng gạch chéo, lề/vỉa hè, làn đỗ xe, làn xe đạp, đống tuyết, nắp capo.
+KHÔNG vẽ: vạch qua đường (zebra), vạch dừng, mũi tên, chữ/biểu tượng sơn trên đường, các vạch chéo bên trong vùng gạch chéo.
+Polygon dừng ở mép dưới xe đầu tiên phía trước trong làn đó. Không tô lên xe, không tô lên nắp capo.
+Không chắc → vẫn vẽ theo khả năng cao nhất và tick needs_review. Không xác định nổi chiều đường → tag image_escalate. Không đoán.
+Mục lục
+0. Tài liệu bổ sung + ảnh minh họa
+1. Objective + scope
+2. Annotation unit
+3. Geometry rule
+4. Taxonomy
+5. Inclusion / exclusion
+6. Visibility / occlusion
+7. Ambiguity / escalation
+8. Temporal rule
+9. Examples
+10. Common mistakes
+Phụ lục A — Quy trình làm 1 ảnh (checklist)
+Phụ lục B — Bảng tra nhanh: tình huống → làm gì
+Phụ lục C — Thao tác CVAT cho task này
+Phụ lục D — Thuật ngữ
+0. Tài liệu bổ sung + ảnh minh họa
+Ảnh minh họa đã tô màu được đặt ngay dưới từng ví dụ ở mục 9 (Hình 1–4). Mỗi rule trong guideline đều đã viết bằng chữ; ảnh chỉ giúp nhìn nhanh, không thay thế rule.
+Ảnh
+Minh họa rule gì
+Link
+BDD06
+Cao tốc cong, vạch đứt = 1 polyline liền, direct + 2 alternative, dừng ở mép dưới xe
+xem Hình ở mục 9
+BDD01
+Vùng gạch chéo (gore) → không tô, không vẽ vạch chéo bên trong; các làn trái gộp 1 polygon
+xem Hình ở mục 9
+BDD03
+Vạch vàng liền = mép trái lòng đường; lề + dải cỏ bên trái → không tô
+xem Hình ở mục 9
+BDD04
+Phố 2 chiều: vạch vàng đôi = 1 polyline ở giữa; bên kia = ngược chiều → không tô; road_edge
+xem Hình ở mục 9
+Màu trong ảnh minh họa: 🟩 xanh lá = direct · 🟦 xanh dương = alternative · 🟥 đỏ gạch chéo = không tô · đường trắng/vàng = lane_line · đường hồng = road_edge · chấm đỏ = điểm polyline.
+Ảnh minh họa vẽ tay để giải thích rule, không phải đáp án chuẩn từng pixel. Khi ảnh và chữ khác nhau, làm theo chữ.
+1. Objective + scope
+1.1 Dữ liệu dùng để làm gì (downstream)
+Dữ liệu train module Lane Keeping + Lane Change cho xe có camera hành trình gắn sau kính lái. Module cần biết 2 thứ:
+Module cần
+Lấy từ annotation nào
+Các làn nằm ở đâu, vạch nào được đè (đứt) / không được đè (liền, vàng đôi)
+lane_boundary + style, color
+Xe đang ở làn nào, được phép chuyển sang đâu
+drivable_area + area_type
+1.2 Lỗi nào nguy hiểm nhất
+Lỗi
+Hậu quả
+Mức
+Tô làn ngược chiều thành direct/alternative
+Xe có thể lái sang chiều ngược lại
+critical
+Tô vùng gạch chéo / lề / vỉa hè / làn xe đạp thành drivable
+Xe lái vào chỗ cấm hoặc chỗ không có đường
+critical
+Vạch liền gán thành đứt (hoặc vàng đôi thành đứt)
+Xe tưởng được chuyển làn / vượt
+critical
+Bỏ sót 1 vạch làn
+Model đếm sai số làn
+major
+Polyline lệch vài pixel
+Vị trí làn hơi lệch
+minor
+1.3 Trong scope — PHẢI label
+Mọi vạch sơn dọc trên mặt đường xe đang đi, cả hai chiều: vạch trắng / vàng, liền / đứt / đôi.
+Vạch dọc của làn xe đạp, làn đỗ xe, viền vùng gạch chéo (vẫn là vạch làn, chỉ vùng bên trong là không tô).
+Mép đường không có vạch sơn: bó vỉa, chân rào chắn/tường, mép nhựa giáp cỏ/đất/sỏi.
+Vùng mặt đường ô tô được phép chạy theo chiều của xe mình.
+1.4 Ngoài scope — KHÔNG label
+Vạch ngang: vạch qua đường (zebra), vạch dừng, gờ giảm tốc sơn.
+Mũi tên, chữ, biểu tượng sơn trên đường (xe đạp, BUS ONLY, số tốc độ…).
+Các vạch chéo / chữ V bên trong vùng gạch chéo.
+Đường trên cầu vượt, đường song song bên kia dải phân cách cứng (ví dụ cao tốc chiều ngược bên kia rào).
+Nắp capo xe mình, phản chiếu trên capo, vật dính kính (giá đỡ điện thoại, logo, gạt mưa).
+2. Annotation unit
+Đơn vị = 1 ảnh tĩnh (1280×720). Mỗi ảnh label độc lập, dùng Shape, không dùng Track.
+2.1 lane_boundary — 1 instance = 1 vạch vật lý liên tục
+Tình huống
+Vẽ mấy polyline
+Vạch đứt (các gạch rời nhau)
+1 polyline đi xuyên qua các khoảng trống
+Vạch đôi (2 vạch song song sát nhau, ví dụ vàng đôi)
+1 polyline ở giữa hai vạch
+Vạch đổi kiểu giữa chừng (đứt → liền)
+2 polyline, tách tại điểm đổi, mỗi đoạn có style riêng
+Vạch tách nhánh (lối ra, nhập làn)
+2 polyline: nhánh đi thẳng + nhánh rẽ ra
+Vạch bị xe che một đoạn, thấy cả hai phía
+1 polyline nối qua xe (visibility=partially_occluded)
+Vạch bị che, không thấy phía sau
+Dừng polyline tại chỗ bị che
+2.2 drivable_area — 1 instance = 1 vùng liền
+Vùng
+Số polygon
+Làn ego
+1 polygon direct
+Tất cả làn cùng chiều bên trái ego
+Gộp 1 polygon alternative
+Tất cả làn cùng chiều bên phải ego
+Gộp 1 polygon alternative
+Vùng alternative bị cắt rời (ví dụ bởi vùng gạch chéo)
+Mỗi mảnh 1 polygon
+→ Ảnh thường có 1 direct + tối đa 2 alternative.
+3. Geometry rule
+3.1 lane_boundary — Polyline
+Công cụ: Draw new polyline → label lane_boundary → Shape → click từng điểm → bấm N để xong.
+Rule
+Chi tiết
+Vị trí điểm
+Đặt ở tâm bề rộng vạch sơn. Với road_edge: đặt đúng mép mặt nhựa (chỗ nhựa gặp bó vỉa / rào / cỏ).
+Hướng vẽ
+Luôn từ dưới lên (gần xe → xa xe).
+Điểm đầu (gần)
+Chỗ vạch chạm mép nắp capo hoặc mép ảnh. Không kéo xuống đè lên capo.
+Điểm cuối (xa)
+Điểm xa nhất mà vạch còn cách vạch bên cạnh ≥ 10 px. Khi các vạch dồn sát nhau ở xa → dừng.
+Giao lộ
+Vạch làn kết thúc tại vạch dừng. Không kéo vạch làn qua giữa giao lộ.
+Số điểm
+Đoạn thẳng: 2–3 điểm. Đoạn cong: thêm điểm ở mỗi chỗ đổi độ cong, khoảng cách 2 điểm liên tiếp ≤ 100 px.
+Độ dài tối thiểu
+Vạch nhìn thấy ngắn hơn 30 px → không vẽ.
+Dung sai
+Mỗi điểm lệch ≤ 5 px so với tâm vạch ở nửa dưới ảnh; ở xa lệch ≤ 1 bề rộng vạch. Zoom (cuộn chuột) trước khi đặt điểm.
+3.2 drivable_area — Polygon
+Công cụ: Draw new polygon → label drivable_area → Shape → click ≥ 4 điểm → N.
+Cạnh
+Đặt ở đâu
+Trái / phải
+Đi theo tâm của lane_boundary tương ứng. Zoom lên, đặt điểm polygon trùng điểm polyline.
+Dưới
+Theo mép nắp capo (hoặc mép dưới ảnh nếu không thấy capo).
+Trên
+(1) Mép dưới của xe đầu tiên nằm trong làn đó — kẻ ngang qua làn, không tô vòng quanh hoặc lên thân xe. (2) Không có xe → chỗ lane_boundary hai bên kết thúc (điểm cuối xa). (3) Ở giao lộ → mép xa của vạch qua đường đầu tiên phía trước.
+Nhiều làn gộp 1 polygon
+Cạnh trên có thể là bậc thang: mỗi làn con dừng ở xe đầu tiên của làn đó.
+Giữa 2 polygon
+direct và alternative chung đúng một cạnh (tâm vạch phân làn). Không chồng lên nhau, không để hở khe.
+Dung sai
+Biên polygon lệch ≤ 5 px so với tâm vạch / mép đường ở nửa dưới ảnh.
+4. Taxonomy
+4.1 Label (class)
+Label
+Kiểu CVAT
+Dùng khi nào
+lane_boundary
+polyline
+Mọi vạch sơn dọc trong scope, và mép đường không có vạch
+drivable_area
+polygon
+Vùng mặt đường xe mình được phép chạy
+image_escalate
+tag (cả ảnh)
+Không xác định được chiều đường hoặc không thấy mặt đường (quá tối, bị che gần hết, ảnh hỏng)
+Vì sao ít class: loại vạch, màu, kiểu, độ rõ đều là thuộc tính của cùng một đường biên. Nếu tách class (single_white_dashed, double_yellow_solid…) sẽ ra hơn 10 class, annotator dễ chọn nhầm và QA khó đếm. Nên chỉ 2 class hình học + attribute.
+4.2 Attribute của lane_boundary
+Attribute
+Giá trị
+Default
+Ý nghĩa / cách chọn
+type
+lane_line, road_edge
+__undefined__
+lane_line = vạch sơn · road_edge = mép đường không có vạch sơn
+color
+white, yellow, none
+__undefined__
+Màu vạch. road_edge luôn none
+style
+solid, dashed, double_solid, solid_dashed, none
+__undefined__
+solid_dashed = vạch đôi 1 liền 1 đứt. road_edge luôn none
+visibility
+clear, faded, partially_occluded
+__undefined__
+faded = sơn mờ/bong/bị nước-tuyết phủ; partially_occluded = có đoạn bị xe/vật che
+needs_review
+checkbox
+false
+Tick khi không chắc (mục 7)
+Tổ hợp hợp lệ duy nhất (khác bảng này = lỗi):
+type
+color
+style
+lane_line
+white hoặc yellow
+solid, dashed, double_solid, solid_dashed
+road_edge
+none
+none
+Cách chọn style khi phân vân:
+Thấy ít nhất 2 khoảng trống đều nhau dọc vạch → dashed.
+Vạch liên tục trên toàn đoạn nhìn thấy → solid.
+Hai vạch song song sát nhau, cả hai liền → double_solid; một liền một đứt → solid_dashed.
+Chỉ thấy 1 gạch ngắn, không đoán được liền hay đứt → chọn dashed + tick needs_review.
+4.3 Attribute của drivable_area
+Attribute
+Giá trị
+Default
+Ý nghĩa
+area_type
+direct, alternative
+__undefined__
+Theo cây quyết định bên dưới
+needs_review
+checkbox
+false
+Tick khi không chắc vùng có được phép chạy không
+⚠️ __undefined__ còn trong file export = quên gán → reviewer tính lỗi. Mọi attribute kiểu select phải được chọn.
+4.4 Cây quyết định vùng — làm lần lượt, dừng ở bước đầu tiên khớp
+Vùng mặt đường này là gì?
+│
+├─ 1. Là làn chứa TÂM NẮP CAPO xe mình?                       → direct
+│
+├─ 2. Nằm bên kia VẠCH VÀNG (đơn/đôi/đứt) hoặc DẢI PHÂN CÁCH,
+│     xe ở đó quay ĐẦU về phía camera?                           → KHÔNG tô  (ngược chiều)
+│
+├─ 3. Là vùng GẠCH CHÉO, LỀ ngoài vạch trắng liền mép đường,
+│     LÀN XE ĐẠP, LÀN ĐỖ XE có xe đang đỗ, VỈA HÈ, ĐẢO,
+│     ĐỐNG TUYẾT?                                                → KHÔNG tô
+│
+├─ 4. Là làn CÙNG CHIỀU, nối liền mặt đường với làn ego
+│     (kể cả làn rẽ, làn nhập, làn thoát)?                       → alternative
+│
+└─ 5. Không chắc thuộc bước nào                                  → tô theo khả năng cao nhất
++ tick needs_review
+Nhận biết làn ngược chiều (lỗi critical):
+Ở Mỹ (toàn bộ ảnh BDD), vạch vàng luôn là ranh giới với chiều ngược lại, hoặc là mép trái của đường một chiều / cao tốc.
+Xe bên kia quay đầu xe (đèn pha trắng) về phía camera.
+Có dải phân cách cứng, rào hoặc dải cỏ ở giữa.
+Vạch vàng đứt (được phép vượt) vẫn là ngược chiều → không tô.
+Nhận biết làn xe đạp: làn hẹp (hẹp hơn nửa làn ô tô) giữa 2 vạch trắng liền, thường sát lề hoặc sát làn đỗ, có thể có logo xe đạp.
+Xe mình đang đè vạch: làn direct = làn chứa tâm nắp capo.
+5. Inclusion / exclusion
+Trường hợp
+lane_boundary
+drivable_area
+Vạch làn trắng/vàng, liền/đứt, cả 2 chiều
+Vẽ lane_line
+—
+Mép đường có vạch trắng liền sát bó vỉa
+Chỉ vẽ vạch sơn, không vẽ thêm road_edge
+Tô tới tâm vạch
+Mép đường không có vạch sơn
+Vẽ road_edge
+Tô tới mép nhựa
+Hàng xe đỗ dọc lề, không có vạch
+Không vẽ road_edge theo xe
+Cạnh polygon đi theo mép dưới bánh xe đỗ
+Viền vùng gạch chéo
+Vẽ lane_line solid
+Vùng bên trong không tô
+Vạch chéo / chữ V bên trong vùng gạch chéo
+Không vẽ
+—
+Zebra, vạch dừng, mũi tên, chữ, logo xe đạp
+Không vẽ
+Mặt đường có zebra vẫn tô nếu thuộc làn
+Vạch của làn xe đạp / làn đỗ
+Vẽ lane_line
+Làn xe đạp / làn đỗ không tô
+Giữa giao lộ (không có vạch)
+Không vẽ
+direct/alternative dừng ở mép xa zebra đầu tiên
+Đường không có vạch nào, có bằng chứng một chiều (xe cùng hướng, biển một chiều)
+2 road_edge nếu thấy mép
+Cả lòng đường = 1 direct
+Đường không có vạch nào, không rõ một chiều hay hai chiều
+2 road_edge nếu thấy mép
+Cả lòng đường = 1 direct + tick needs_review
+Đường trên cầu vượt / bên kia rào cứng
+Không vẽ
+Không tô
+6. Visibility / occlusion
+Tình huống
+Làm gì
+Vạch mờ / bong sơn
+Vẫn vẽ nếu còn nhìn ra đường đi của vạch → visibility=faded. Chỉ còn vài vệt rời rạc, không chắc là vạch → không vẽ.
+Mặt đường ướt, loá, phản chiếu
+Vẽ theo vạch thật, không vẽ theo vệt phản chiếu đèn trên mặt nước.
+Tuyết / nước phủ vạch
+Vẽ phần còn thấy, faded. Đống tuyết trên mặt đường không thuộc drivable.
+Bị xe che
+Thấy vạch ở cả hai phía xe → nối qua (1 polyline), partially_occluded. Không thấy phía sau → dừng polyline. Polygon dừng ở mép dưới xe đầu tiên.
+Ban đêm / dưới gầm cầu
+Vẽ phần nhìn rõ. Phần tối không phân biệt được vạch → dừng polyline. Màu không chắc → chọn màu khả năng cao nhất + needs_review.
+Vật dính kính (giá điện thoại, logo, giọt mưa)
+Thấy vạch ở cả hai phía vật → nối qua, partially_occluded. Polygon vẫn tô phía sau vật dính kính (vật đó không nằm trên đường).
+Ở xa
+Dừng khi 2 vạch cạnh nhau cách nhau < 10 px (mục 3.1).
+7. Ambiguity / escalation
+Quyết định
+Khi nào
+Thể hiện trong CVAT (nhìn thấy trong file export)
+LABEL
+Vạch / vùng xác định được
+Polyline / polygon + đủ attribute
+IGNORE
+Ngoài scope (mục 1.4, 5)
+Không vẽ gì
+UNKNOWN
+Task này không có giá trị unknown
+Mọi attribute phải chọn 1 giá trị; không chắc → khả năng cao nhất + needs_review
+ESCALATE (object)
+Không chắc màu/kiểu vạch; không chắc vùng là làn cùng chiều hay làn đỗ/lề/làn xe đạp; đường không có vạch và không rõ 1 hay 2 chiều
+Vẽ theo khả năng cao nhất + tick needs_review
+ESCALATE (cả ảnh)
+Không xác định được chiều đường; mặt đường gần như không thấy
+Tag image_escalate, không vẽ gì khác
+Quy tắc vàng: thà không tô một vùng rồi tick needs_review còn hơn tô nhầm làn ngược chiều / vùng gạch chéo / làn xe đạp thành drivable.
+Ai xử lý escalation: object có needs_review=true và ảnh có tag image_escalate được reviewer (QA owner của nhóm) xem lại 100%, quyết định cuối, và nếu là trường hợp mới thì bổ sung rule vào guideline ở version tiếp theo.
+8. Temporal rule
+Không áp dụng — task ảnh tĩnh. Mỗi ảnh label độc lập bằng Shape, không dùng Track, không cần nhất quán giữa các ảnh.
+Nếu sau này dữ liệu là video cắt frame: mỗi frame vẫn label như ảnh tĩnh; lấy mẫu thưa (ví dụ 1 frame/giây) để tránh frame gần trùng nhau.
+9. Examples
+Mỗi ví dụ có ảnh minh họa tô màu ngay bên dưới tiêu đề.
+9.1 BDD06 — Cao tốc cong, nhiều làn cùng chiều (case normal)
+Hình 1 — BDD06: cao tốc cong, vạch đứt = 1 polyline liền, 1 direct + 2 alternative, dừng ở mép dưới xe
+Đối tượng
+Expected
+Vạch vàng liền sát rào bên trái
+lane_boundary: lane_line / yellow / solid / clear
+Vạch đứt trái làn ego
+1 polyline liền lane_line / white / dashed / clear, thêm điểm theo đoạn cong (≤ 100 px)
+Vạch đứt phải làn ego
+1 polyline liền lane_line / white / dashed / clear
+Vạch trắng liền bên phải (mép đường)
+lane_line / white / solid / clear — không vẽ thêm road_edge ở chân rào
+Làn ego
+drivable_area direct, dừng ở mép dưới xe nhỏ phía xa trong làn
+Làn trái (giữa vạch vàng và vạch đứt)
+alternative
+Làn phải
+alternative, dừng ở mép dưới xe đen trong làn phải
+Vùng dashboard/kính mờ góc dưới trái
+Không tô
+9.2 BDD01 — Cao tốc + vùng gạch chéo tách lối ra (case critical)
+Hình 2 — BDD01: vùng gạch chéo không tô, không vẽ vạch chéo bên trong; các làn trái gộp 1 polygon
+Đối tượng
+Expected
+Các vạch đứt
+Mỗi vạch 1 polyline white / dashed
+Hai viền của vùng gạch chéo bên phải
+Mỗi viền 1 polyline white / solid
+Các vạch chéo bên trong vùng gạch chéo
+Không vẽ
+Vùng gạch chéo
+Không tô ← critical
+Làn ego
+direct, dừng ở mép dưới xe SUV đen phía trước
+2 làn bên trái
+Gộp 1 polygon alternative; làn ngoài cùng dừng ở mép dưới xe bạc bên trái
+Làn bên phải (giữa vạch đứt và viền gạch chéo)
+alternative
+9.3 BDD03 — Vạch vàng liền mép trái, lề + dải cỏ (case edge)
+Hình 3 — BDD03: vạch vàng liền = mép trái lòng đường; lề + dải cỏ không tô
+Đối tượng
+Expected
+Vạch vàng liền bên trái
+lane_line / yellow / solid / clear — đây là mép trái lòng đường
+Phần nhựa sẫm + sỏi + cỏ bên trái vạch vàng
+Không tô (lề, không phải làn)
+Vạch đứt bên phải làn ego
+1 polyline white / dashed
+Vạch trắng liền bên phải
+white / solid
+Làn ego
+direct, dừng ở mép dưới xe bạc phía trước
+Làn phải
+alternative
+9.4 BDD04 — Phố 2 chiều, vạch vàng đôi (case critical)
+Hình 4 — BDD04: vạch vàng đôi = 1 polyline ở giữa; bên kia là ngược chiều, không tô; road_edge bên phải
+Đối tượng
+Expected
+Vạch vàng đôi giữa đường
+1 polyline ở giữa hai vạch: lane_line / yellow / double_solid / clear
+Mép phải (nhựa giáp bê tông vỉa hè, không có vạch)
+road_edge / none / none
+Bên kia vạch vàng đôi (có logo xe đạp, xe đỗ)
+Không tô — ngược chiều ← critical
+Logo xe đạp, chữ sơn
+Không vẽ
+Làn ego
+direct, từ mép capo tới mép dưới xe van trắng phía xa
+9.5 Tóm tắt nhanh
+sample_id
+Thấy gì
+Expected output chính
+Rule
+BDD06
+Cao tốc cong, 3 làn cùng chiều
+1 direct + 2 alternative; vạch đứt = 1 polyline
+2, 3, 4.4
+BDD01
+Vùng gạch chéo lối ra
+Gạch chéo không tô, không vẽ vạch bên trong
+1.4, 5, 4.4 bước 3
+BDD03
+Vạch vàng liền + lề cỏ
+Lề không tô
+4.4 bước 3, 5
+BDD04
+Vàng đôi, phố 2 chiều
+1 polyline giữa; bên kia không tô; road_edge
+2.1, 4.4 bước 2
+10. Common mistakes
+#
+Lỗi
+Cách đúng
+Mức
+1
+Tô làn ngược chiều (bên kia vạch vàng, kể cả vàng đứt)
+Không tô
+critical
+2
+Tô vùng gạch chéo, lề, làn xe đạp, làn đỗ
+Không tô
+critical
+3
+Gán vạch liền/vàng đôi thành dashed
+Đếm khoảng trống (mục 4.2)
+critical
+4
+Vẽ từng gạch của vạch đứt thành nhiều polyline
+1 polyline liền
+major
+5
+Vẽ 2 polyline cho vạch đôi
+1 polyline ở giữa, double_solid
+major
+6
+Polygon tô lên nắp capo hoặc vòng lên thân xe phía trước
+Cạnh dưới theo capo, cạnh trên dừng ở mép dưới xe
+major
+7
+direct và alternative chồng nhau / hở khe
+Chung đúng một cạnh theo tâm vạch
+major
+8
+Vẽ zebra, vạch dừng, mũi tên, logo
+Ngoài scope
+major
+9
+Vẽ thêm road_edge ngay cạnh vạch trắng liền mép đường
+Chỉ vẽ vạch sơn
+minor
+10
+Tổ hợp sai: road_edge + white, lane_line + none
+Theo bảng tổ hợp 4.2
+major
+11
+Kéo polyline tới tận chỗ các vạch chập lại ở chân trời
+Dừng khi cách vạch bên cạnh < 10 px
+minor
+12
+Còn __undefined__
+Dùng chế độ Attribute annotation đi qua từng object
+major
+13
+Vẽ road_edge theo hàng xe đỗ
+Xe đỗ không phải mép đường; polygon đi theo mép dưới bánh xe
+major
+Phụ lục A — Quy trình làm 1 ảnh (checklist)
+Nhìn tổng thể (10 giây): làn ego là làn nào (chứa tâm capo)? Vạch vàng ở đâu → bên kia là ngược chiều? Có vùng gạch chéo / làn xe đạp / làn đỗ / giao lộ không?
+Pass 1 — lane_boundary: vẽ lần lượt từ trái sang phải, mỗi vạch từ dưới lên. Nhớ road_edge ở mép không có vạch.
+Pass 2 — drivable_area: vẽ direct trước → alternative trái → alternative phải. Cạnh trái/phải bám đúng điểm polyline.
+Pass 3 — attribute: đổi Standard → Attribute annotation (góc trên phải), đi qua từng object, gán hết; kiểm tổ hợp mục 4.2.
+Tự kiểm: giảm Opacity (mục Appearance bên phải) để xem polygon có đè capo / đè xe / chồng nhau không. Đọc lại mục 10.
+Lưu: Ctrl+S. Sang ảnh kế: F.
+⏱ Thời gian mục tiêu: 5–8 phút / ảnh.
+Phụ lục B — Bảng tra nhanh: tình huống → làm gì
+Tôi thấy…
+lane_boundary
+drivable_area
+Attribute cần chú ý
+Vạch trắng đứt giữa 2 làn cùng chiều
+1 polyline
+2 bên là direct/alternative
+white / dashed
+Vạch trắng liền mép phải cao tốc
+1 polyline
+Ngoài vạch không tô
+white / solid
+Vạch vàng liền mép trái cao tốc
+1 polyline
+Bên trái không tô
+yellow / solid
+Vạch vàng đôi giữa phố
+1 polyline ở giữa
+Bên kia không tô
+yellow / double_solid
+Vạch vàng đứt giữa phố 2 chiều
+1 polyline
+Bên kia vẫn không tô
+yellow / dashed
+Vùng có nhiều vạch chéo / chữ V
+Chỉ vẽ 2 viền
+Không tô bên trong
+viền white hoặc yellow / solid
+Làn hẹp có logo xe đạp
+Vẽ 2 vạch viền
+Không tô
+white / solid
+Hàng xe đỗ dọc lề, không vạch
+Không vẽ
+Dừng ở mép dưới bánh xe đỗ
+—
+Bó vỉa / chân rào, không vạch
+road_edge
+Tô tới mép nhựa
+none / none
+Zebra ngay trước mặt
+Không vẽ zebra
+Tô qua zebra, dừng ở mép xa zebra
+—
+Vạch dừng
+Không vẽ; vạch làn dừng tại đây
+Tô qua
+—
+Xe phía trước trong làn
+Nối vạch qua xe nếu thấy 2 phía
+Dừng ở mép dưới xe
+partially_occluded
+Vạch mờ, còn nhìn ra hướng
+Vẽ
+—
+faded
+Đống tuyết trên đường
+—
+Không tô đống tuyết
+—
+Không chắc
+Vẽ khả năng cao nhất
+Vẽ khả năng cao nhất
+needs_review
+Không biết đường chạy chiều nào
+Không vẽ gì
+Không vẽ gì
+Tag image_escalate
+Phụ lục C — Thao tác CVAT cho task này
+Việc
+Cách làm
+Vẽ polyline
+Thanh trái → Draw new polyline → label lane_boundary → Shape → click điểm → N
+Vẽ polygon
+Draw new polygon → label drivable_area → Shape → click ≥ 4 điểm → N
+Vẽ tiếp cùng loại
+N
+Zoom
+Cuộn chuột; giữ chuột phải kéo để di chuyển ảnh
+Sửa điểm
+Chọn object → kéo điểm; giữ Alt + click vào một điểm để xoá điểm đó. Sai nhiều điểm → xoá object vẽ lại cho nhanh
+Xoá object
+Chọn → Del
+Hoàn tác
+Ctrl+Z
+Gán attribute nhanh
+Góc trên phải Standard → Attribute annotation; ↑/↓ đổi attribute, Tab sang object kế, phím số chọn giá trị
+Nhìn xuyên polygon
+Sidebar phải → Appearance → kéo Opacity xuống
+Tag cả ảnh
+Setup tag → image_escalate → Tag
+Sang ảnh kế / trước
+F / D
+Lưu
+Ctrl+S (export chỉ lấy bản đã lưu)
+Phụ lục D — Thuật ngữ
+Thuật ngữ
+Nghĩa
+ego
+Xe gắn camera (xe mình)
+làn ego
+Làn chứa tâm nắp capo
+direct
+Vùng xe đang chạy (làn ego)
+alternative
+Làn cùng chiều xe có thể chuyển sang
+gore / vùng gạch chéo
+Vùng tam giác có vạch chéo/chữ V giữa làn chính và lối ra/vào — cấm chạy vào
+road_edge
+Mép đường vật lý không có vạch sơn
+tâm vạch
+Đường giữa theo bề rộng của vạch sơn
+needs_review
+Cờ báo "tôi không chắc", để reviewer xem lại
+image_escalate
+Tag báo cả ảnh không label được

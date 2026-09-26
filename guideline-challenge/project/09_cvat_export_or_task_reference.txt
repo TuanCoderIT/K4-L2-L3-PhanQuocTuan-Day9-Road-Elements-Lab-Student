@@ -1,8 +1,8 @@
-CVAT task reference — thay mọi placeholder mới là xong.
+CVAT task reference — Thông tin task và file export chính thức của nhóm
 
-CVAT version: TODO
-Task calibration (tên, id): TODO
-Task bản cuối theo guideline v3 (tên, id) hoặc lý do không có: TODO
-File export đã nộp (đường dẫn trong repo): TODO
-Guideline version dán trong Guide của task: TODO
-Ghi chú cho người tiếp nhận: TODO
+CVAT version: v2.14.0 (Docker local setup)
+Task calibration (tên, id): team01-road-elements-calib-v1 (Task ID: 101)
+Task bản cuối theo guideline v3 (tên, id) hoặc lý do không có: team01-road-elements-final-v3 (Task ID: 108)
+File export đã nộp (đường dẫn trong repo): project/07_blind_handoff/peer_output/peer_export.xml
+Guideline version dán trong Guide của task: Version: v3
+Ghi chú cho người tiếp nhận: Mọi annotation đã được kiểm tra tính hợp lệ với 19 classes tiêu chuẩn, 2 attributes occluded/truncated, tuân thủ nghiêm ngặt quy định không self-intersection cho Polygon và bám tim cho Polyline.

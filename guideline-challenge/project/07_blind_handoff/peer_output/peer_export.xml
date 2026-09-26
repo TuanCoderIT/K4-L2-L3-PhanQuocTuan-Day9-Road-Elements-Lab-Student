@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<annotations>
+  <version>1.1</version>
+  <image id="0" name="BDD11.jpg" width="1280" height="720">
+    <box label="car" occluded="0" source="manual" xtl="150" ytl="300" xbr="350" ybr="450">
+      <attribute name="occluded">false</attribute>
+      <attribute name="truncated">false</attribute>
+    </box>
+    <box label="car" occluded="0" source="manual" xtl="400" ytl="310" xbr="580" ybr="440">
+      <attribute name="occluded">false</attribute>
+      <attribute name="truncated">false</attribute>
+    </box>
+    <box label="car" occluded="0" source="manual" xtl="620" ytl="320" xbr="780" ybr="430">
+      <attribute name="occluded">false</attribute>
+      <attribute name="truncated">false</attribute>
+    </box>
+    <box label="traffic light" occluded="0" source="manual" xtl="500" ytl="40" xbr="540" ybr="100">
+      <attribute name="occluded">false</attribute>
+      <attribute name="truncated">false</attribute>
+    </box>
+    <box label="traffic light" occluded="0" source="manual" xtl="600" ytl="40" xbr="640" ybr="100">
+      <attribute name="occluded">false</attribute>
+      <attribute name="truncated">false</attribute>
+    </box>
+    <polygon label="area/drivable" points="100,720;300,450;900,450;1100,720" source="manual" />
+  </image>
+  <image id="1" name="BDD12.jpg" width="1280" height="720">
+    <polyline label="lane/single other" points="250,550;350,550" source="manual" />
+    <polyline label="lane/single white" points="200,720;400,450" source="manual" />
+  </image>
+  <image id="2" name="BDD13.jpg" width="1280" height="720">
+    <polyline label="lane/double white" points="300,720;450,400" source="manual" />
+    <box label="pedestrian" occluded="1" source="manual" xtl="550" ytl="250" xbr="590" ybr="360">
+      <attribute name="occluded">true</attribute>
+      <attribute name="truncated">false</attribute>
+    </box>
+  </image>
+  <image id="3" name="BDD14.jpg" width="1280" height="720">
+    <polyline label="lane/single yellow" points="100,720;300,400" source="manual" />
+    <box label="truck" occluded="0" source="manual" xtl="0" ytl="200" xbr="180" ybr="420">
+      <attribute name="occluded">false</attribute>
+      <attribute name="truncated">true</attribute>
+    </box>
+  </image>
+  <image id="4" name="BDD15.jpg" width="1280" height="720">
+    <polygon label="area/drivable" points="200,720;400,450;700,450;900,720" source="manual" />
+    <polygon label="area/alternative" points="0,720;200,720;400,450;200,450" source="manual" />
+  </image>
+</annotations>
