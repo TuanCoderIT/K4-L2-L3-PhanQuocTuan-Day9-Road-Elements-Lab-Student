@@ -183,8 +183,8 @@ Quy tắc phân xử minh bạch và ghi nhận trong file xuất CVAT:
 | **BDD06** | Cao tốc uốn cong; kính lái góc dưới trái bị lóa sáng; vạch xa mờ dần. | Vẽ xuyên qua vùng lóa kính (`partially_occluded`); tăng mật độ điểm uốn cua (10–15 px/điểm); dừng Polyline ở cự ly xa khi bề rộng $< 3$ px hoặc khoảng cách $< 10$ px. | Mục 3.2, 3.3 & 6.3 |
 | **BDD07** | Đường đô thị có vết vá nhựa đường vuông vức; bóng cây che ngang; vạch vàng phân làn. | Nếu vết vá nhựa cắt đứt vạch $> 1.5$m $\rightarrow$ ngắt thành 2 Polyline riêng biệt; đoạn vạch dưới bóng cây vẽ bình thường kèm gán `partially_occluded`. | Mục 6.2 & 6.3 |
 | **BDD09** | Nút giao nhập làn cong (Merge Ramp); vạch đứt trắng mở rộng theo nhánh rẽ. | Polyline kết thúc tại điểm chia tách chạc ba; tạo 2 Polyline mới rẽ sang 2 nhánh; vẽ mượt theo độ cong đường nhánh. | Mục 2 & 3.2 |
-| **BDD11** | Khu dân cư ngã tư; có vạch người đi bộ Crosswalk bản lớn và vạch Stop line. | Vẽ **2 Polyline giới hạn biên trên và biên dưới của Crosswalk** (`crosswalk`, `vertical`); không vẽ từng sọc ngắn; các vạch phân làn dọc dừng lại tại mép vạch dừng. | Mục 1.3 & 5 |
-| **BDD14** | Cao tốc cong; vạch trắng liền mép đường; xe tải phía xa đè lên tim vạch. | Vẽ vạch mép đường (`single white`, `solid`); tại vị trí xe tải đè lên vạch, **dừng Polyline ngay tại mép lốp xe**, không nối xuyên qua gầm xe. | Mục 5 & 6.1 |
+| **BDD02** | Ngã tư đô thị; có vạch người đi bộ Crosswalk bản lớn và vạch Stop line. | Vẽ **2 Polyline giới hạn biên trên và biên dưới của Crosswalk** (`crosswalk`, `vertical`); không vẽ từng sọc ngắn; các vạch phân làn dọc dừng lại tại mép vạch dừng. | Mục 1.3 & 5 |
+| **BDD08** | Cao tốc nhiều làn; vạch trắng liền mép đường; xe phía trước đè lên vạch phân làn. | Vẽ vạch mép đường (`single white`, `solid`); tại vị trí xe phía trước đè lên vạch, **dừng Polyline ngay tại mép bánh xe**, không nối xuyên qua gầm xe. | Mục 5 & 6.1 |
 
 ---
 
