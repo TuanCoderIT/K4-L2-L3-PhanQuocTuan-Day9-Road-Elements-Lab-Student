@@ -1,1 +1,4 @@
 sample_id,item,values_by_annotator,diagnosis,action,rule_change
+BDD03,laneStyle (vạch cong cao tốc),tuan=solid; long=dashed,guideline_gap,revise_rule,Quy định rõ vạch phân cách tại các đoạn cua cong cao tốc nếu là dải liên tục thì bắt buộc là solid dù có vết trám nối bê tông
+BDD06,visibility (vạch lóa kính),quynh=faded; hieu=visible,data_ambiguity,add_example,Bổ sung hình ảnh minh họa BDD06 vào guideline để làm chuẩn nhận diện hiện tượng lóa kính làm mờ vạch
+BDD10,endpoint (vạch bị xe đỗ che),dung=dừng tại đuôi xe; huyen=nối xuyên qua khoảng trống,guideline_gap,add_escalation,Quy định rõ khi vạch bị xe đỗ che khuất phải dừng tại mép xe và bật cờ needs_review nếu hướng đi tiếp theo không chắc chắn
