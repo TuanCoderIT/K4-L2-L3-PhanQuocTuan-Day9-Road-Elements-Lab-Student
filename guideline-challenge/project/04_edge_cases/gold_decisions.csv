@@ -1,1 +1,11 @@
 sample_id,decision_id,expected,severity,rationale
+BDD11,d1,"laneTypes=single white, laneStyle=dashed (vạch phân làn giữa)",major,vạch đứt rõ ràng phân chia 2 làn cùng chiều
+BDD11,d2,geometry: polyline chạy sát tim vạch sai số <= 3px,minor,vẽ chuẩn bám sát tim vạch theo mục 3 guideline
+BDD12,d1,visibility=faded (vạch tim đường bị mòn),major,vạch sơn xám mờ trên mặt bê tông khó nhìn
+BDD12,d2,needs_review=true,critical,vạch ngắt quãng bất thường nghi ngờ do thi công chắp vá cần escalate
+BDD14,d1,geometry: polyline dừng ngay mép sau xe tải không nối xuyên qua,critical,tránh tạo ảo giác làn thông suốt cho hệ thống ADAS
+BDD14,d2,"laneTypes=single white, laneStyle=solid (vạch mép phải)",minor,vạch liền màu trắng giới hạn mép đường
+BDD17,d1,IGNORE vệt nước mưa phản chiếu ánh sáng,critical,mặt đường ướt tạo vệt sáng giả không phải vạch kẻ sơn
+BDD17,d2,visibility=faded (vạch thực tế dưới trời mưa),major,mưa to làm giảm tương phản vạch
+BDD19,d1,laneStyle=solid (vạch ranh giới tách làn gore area),critical,vạch V tách làn bắt buộc solid nếu nhầm xe sẽ va chạm dải phân cách
+BDD19,d2,geometry: polyline chỉ bám biên ngoài gore không rẽ theo nét chéo,major,chỉ phân định biên làn chính theo quy tắc 5

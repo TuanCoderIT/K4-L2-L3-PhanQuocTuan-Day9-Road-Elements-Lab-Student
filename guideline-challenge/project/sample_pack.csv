@@ -1,1 +1,16 @@
 sample_id,split,tags,reason
+BDD01,example,normal,Đường cao tốc ban ngày vạch đứt rõ ràng làm mẫu chuẩn
+BDD02,example,edge,Đường phố đô thị có vạch người đi bộ và vạch dừng
+BDD04,example,normal,Khu dân cư vạch phân làn tiêu chuẩn
+BDD05,example,edge;conflict,Khu vực phân nhánh split lane trên cao tốc
+BDD03,calibration,edge,Cao tốc đoạn cong vạch liền uốn lượn
+BDD06,calibration,low_visibility,Kính lái lóa sáng vạch xa mờ
+BDD07,calibration,normal,Cao tốc ban ngày trời quang vạch rõ
+BDD08,calibration,normal,Đường cao tốc nhiều làn song song
+BDD09,calibration,edge,Trời râm mát có đoạn nhập làn merge
+BDD10,calibration,edge;occlusion,Phố đông xe đỗ che khuất một phần vạch
+BDD11,blind,normal,Đường phố đô thị ban ngày vạch chuẩn
+BDD12,blind,edge;ambiguity,Vạch phân làn bị mòn mờ trên nền bê tông xám khó phân biệt
+BDD14,blind,edge;occlusion,Xe tải lớn che khuất tim vạch tại điểm nối
+BDD17,blind,critical;low_visibility,Trời mưa mặt đường ướt phản chiếu ánh sáng dễ nhận nhầm vạch
+BDD19,blind,edge,Nút giao tách làn cao tốc có vạch gore area
