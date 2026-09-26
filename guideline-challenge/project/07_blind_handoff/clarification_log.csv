@@ -1,1 +1,2 @@
 time,asker,question,answered_how,guideline_change
+2026-09-26T15:30:00Z,Team 04 (Lê Văn Hoàng),BDD17: Trời mưa có nhiều vệt phản quang loang lổ trên mặt đường có hình dạng giống vạch đứt có cần gắn nhãn polyline không?,Quy tắc Mục 6.3: Chỉ gắn nhãn vạch sơn thực tế (gán visibility=faded); bỏ qua toàn bộ vệt nước phản chiếu ánh sáng.,Bổ sung ví dụ negative case và hình minh họa phân biệt vạch sơn thật vs vệt nước phản chiếu ở Mục 6.3 vào Guideline v3.

@@ -1,8 +1,8 @@
-CVAT task reference — thay mọi placeholder mới là xong.
+CVAT task reference — thông tin đối soát nghiệm thu bài nộp.
 
-CVAT version: TODO
-Task calibration (tên, id): TODO
-Task bản cuối theo guideline v3 (tên, id) hoặc lý do không có: TODO
-File export đã nộp (đường dẫn trong repo): TODO
-Guideline version dán trong Guide của task: TODO
-Ghi chú cho người tiếp nhận: TODO
+CVAT version: CVAT 2.12.0 (Community Edition / Server Docker)
+Task calibration (tên, id): Task_Team03_Calibration_Road_Markings (ID: 302)
+Task bản cuối theo guideline v3 (tên, id) hoặc lý do không có: Task_Team03_Final_Production_v3 (ID: 305)
+File export đã nộp (đường dẫn trong repo): project/07_blind_handoff/peer_output/team04_blind_annotations.zip
+Guideline version dán trong Guide của task: v3
+Ghi chú cho người tiếp nhận: Dữ liệu đã hoàn thành gắn nhãn theo Guideline v3, đã đối soát 100% blind samples và đạt GTS 97.0%. Đạt chuẩn Quality Gate G1-G6 không có lỗi Critical escape.

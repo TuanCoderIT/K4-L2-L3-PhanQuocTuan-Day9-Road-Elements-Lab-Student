@@ -1,6 +1,6 @@
 # Annotation guideline — Lane Boundary tại merge/split + vạch mờ/tạm thời
 
-**Version:** v2
+**Version:** v3
 
 ---
 
@@ -141,16 +141,18 @@ Tất cả các Polyline thuộc class `lane_marking` bắt buộc phải gán �
 
 ### 6.2. Vết vá đường & Đứt đoạn mặt đường (Pavement Patching)
 - Khi mặt đường có mảng bê tông vá hoặc đào đường làm mất dấu vết sơn:
-  - Nếu khoảng đứt đoạn ngắn $\le 1.5$ mét và hai đầu thẳng hàng: Cho phép vẽ nối qua, gán `visibility = faded`.
-  - Nếu khoảng đứt đoạn $> 1.5 - 2.0$ mét: **Ngắt Polyline**, dừng tại mép vết vá và bắt đầu Polyline mới khi vạch sơn xuất hiện lại.
+  - Nếu khoảng đứt đoạn ngắn $\le 1.5$ mét và hai đầu thẳng hàng: Cho phép vẽ nối qua, gán `visibility = faded` (áp dụng khi vạch mòn giảm $> 50\%$ tương phản nhưng quỹ đạo còn nhận biết được).
+  - Nếu khoảng đứt đoạn $> 1.5$ mét do chắp vá thi công: **Ngắt Polyline**, dừng tại mép vết vá, bắt đầu Polyline mới khi vạch sơn xuất hiện lại và **bắt buộc tick chọn `needs_review = true`** để QA Lead kiểm tra.
 
 ### 6.3. Bóng râm & Lóa kính lái (Shadows & Glare)
 - **Bóng cây / Bóng tòa nhà / Bóng cầu vượt:** Vẫn vẽ Polyline xuyên qua vùng bóng râm nếu mắt người nhìn xuyên được cấu trúc vạch sơn, gán `visibility = partially_occluded`.
 - **Kính chắn gió bị lóa sáng (như góc dưới trái ảnh BDD06):** Vẽ liền nét Polyline xuyên qua vùng lóa nếu xu hướng tuyến đường hai đầu thẳng hàng rõ ràng; gán `visibility = partially_occluded`.
 - **Giọt mưa / Decal trên kính:** Bỏ qua các vật dính trên kính, chỉ vẽ vạch sơn thật trên mặt đường.
 
-### 6.4. Vệt nước mưa phản quang (Reflective Puddles)
-- Trời mưa mặt đường ướt tạo ra các dải sáng phản chiếu đèn thẳng tắp rất giống vạch sơn. Annotator phải zoom kiểm tra kỹ: chỉ vẽ khi thấy rõ kết cấu hạt sơn nổi; **BỎ QUA** nếu chỉ là dải sáng phản quang của nước.
+### 6.4. Vệt nước mưa phản quang (Reflective Puddles - Negative Case)
+- **Quy tắc phân biệt dứt khoát:** Trời mưa mặt đường ướt tạo ra các dải sáng phản chiếu đèn thẳng tắp rất giống vạch sơn.
+  - **CHỈ VẼ** khi thấy rõ hạt sơn nổi / gờ sơn có độ dày vật lý trên mặt đường $\rightarrow$ gán `visibility = faded`.
+  - **TUYỆT ĐỐI BỎ QUA (IGNORE)** nếu chỉ là dải sáng phản quang của nước loang lổ trên bề mặt nhựa đường. Đây là Negative Case quan trọng để tránh tạo làn ảo cho hệ thống ADAS.
 
 ---
 
