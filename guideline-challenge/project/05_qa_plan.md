@@ -1,10 +1,15 @@
 # QA plan + quality gates
 
+<<<<<<< HEAD
 ## 1. Flow
+=======
+Kế hoạch kiểm thử chất lượng và các cổng kiểm soát (Quality Gates) cho dự án gắn nhãn Lane Boundary.
+>>>>>>> 02cdd5326e0beb55bcaf28193ee8968a84d847c0
 
 Quy trình bảo đảm chất lượng tuân theo mô hình 6 bước khép kín:
 `Guideline v3` → `Calibration (Calibration Report)` → `Production Annotation` → `Self-QC (Checklist)` → `Review & Audit` → `Rework / Quality Gate`.
 
+<<<<<<< HEAD
 - **Ai review, review bao nhiêu:**
   - QA Auditor độc lập (Phạm Thị D) tiến hành review **100% dữ liệu** đối với các ảnh thuộc tag rủi ro cao (`critical`, `ambiguity`), và **20% sample ngẫu nhiên** đối với các ảnh thuộc tag `normal`.
 - **Chọn sample theo rule nào:**
@@ -25,6 +30,31 @@ Bảng phân loại mức độ lỗi (Defect Severity Matrix) dựa trên hậu
 | **Major** | Lỗi gán sai class vật thể cùng nhóm hoặc sai lệch tọa độ geometry lớn hơn tolerance quy định. | Lầm lẫn giữa `car` và `truck`; Polygon `area/drivable` lệch ranh giới lòng đường $> 5\text{ px}$; BBox vẽ quá rộng ôm cả bóng đổ. | Yêu cầu Annotator **Rework** điều chỉnh lại các object bị lỗi. |
 | **Minor** | Lỗi bỏ sót hoặc chọn sai attribute phụ mà không làm đổi class chính và vị trí vật thể. | Bỏ quên check `occluded=true` cho xe bị che 10%; Polyline lệch tim vạch sơn $3 - 5\text{ px}$. | Gửi thông báo feedback trực tiếp cho Annotator tự sửa. |
 | **Question** | Tình huống mơ hồ, ảnh bị mờ nặng hoặc lóa sáng không đủ bằng chứng thị giác khẳng định. | Vật thể ở xa mờ ảo không rõ là biển báo hay cột đèn; vạch sơn bị đè lên bởi đống tuyết. | Tạo CVAT Issue `UNCERTAIN_CLASS` / `SCOPE` đẩy lên Lead/Mentor giải quyết. |
+=======
+Quy trình: Guideline → Calibration → Production → Self-QC → Review → Rework → Quality Gate.
+
+- **Ai review, review bao nhiêu:**
+  Vũ Ngọc Huyền (QA Owner) và Phan Quốc Tuấn (Spec Owner) chịu trách nhiệm review. Thực hiện review 100% các mẫu có gắn tag rủi ro (`critical`, `edge`, `ambiguity`) và rút mẫu ngẫu nhiên 30% đối với các mẫu `normal`.
+- **Chọn sample theo rule nào:**
+  Áp dụng lấy mẫu phân tầng theo rủi ro (Risk-based Stratified Sampling):
+  1. 100% ảnh trời mưa/chói lóa/ban đêm (`low_visibility`).
+  2. 100% ảnh có khu vực phân tách làn/nhập làn (`split`/`merge`).
+  3. 100% ảnh có phương tiện che khuất (`occlusion`).
+  4. Lấy ngẫu nhiên các ảnh đường thẳng quang đãng để kiểm tra độ trôi chất lượng (quality drift).
+- **Issue được ghi ở đâu, đóng thế nào:**
+  Mọi lỗi phát hiện được ghi chú trực tiếp qua tính năng Comment/Issue trên từng frame/object của CVAT và thống kê vào bảng review log. Issue chỉ được đóng (`Closed`) sau khi annotator sửa trực tiếp hình học/thuộc tính và QA Lead kiểm tra nghiệm thu.
+- **Khi phát hiện guideline gap thì update và version ra sao:**
+  Khi hai annotator hoặc QA gặp ca bất đồng không thể phân xử bằng guideline hiện tại: triệu tập họp nhanh 10 phút giữa Spec Owner và QA Owner $\rightarrow$ ban hành rule mới $\rightarrow$ cập nhật nội dung vào `02_guideline.md` và nâng version (ví dụ từ v1 lên v2, v2 lên v3) $\rightarrow$ ghi rõ lý do và bằng chứng vào `08_revision_log.md`.
+
+## Defect severity
+
+| Severity | Định nghĩa cho project này | Ví dụ | Action mặc định |
+|---|---|---|---|
+| Critical | Lỗi gây mất an toàn trực tiếp cho xe tự hành (tạo làn ảo hoặc dẫn xe vào dải phân cách) | Nối polyline xuyên qua xe khác; vẽ sai ranh giới vùng gore tại merge/split; nhầm vạch phản quang nước mưa thành vạch sơn | REJECT toàn bộ batch của annotator, yêu cầu sửa lại toàn bộ và tái đào tạo quy tắc |
+| Major | Sai lệch lớn về ngữ nghĩa phân làn | Gán nhầm `laneStyle` (vạch liền thành vạch đứt); nhầm `laneTypes` (vàng thành trắng); vẽ vạch nứt nhựa đường | REWORK: Trả về annotator sửa các object bị gắn cờ trong vòng 15 phút |
+| Minor | Sai lệch nhỏ về hình học hoặc thuộc tính phụ trợ | Polyline lệch tim vạch 4–6 px; chọn nhầm `visibility` giữa `faded` và `visible` | QA Owner sửa trực tiếp trên tool và ghi chú nhắc nhở annotator |
+| Question | Tình huống bất định không đủ bằng chứng hình ảnh | Vạch sơn bị thi công chắp vá đè 2 lớp mờ nhạt | ESCALATE lên Spec Owner để thống nhất tiền lệ xử lý |
+>>>>>>> 02cdd5326e0beb55bcaf28193ee8968a84d847c0
 
 ## 3. Metrics
 
@@ -32,6 +62,7 @@ Bảng chỉ số đo lường chất lượng dữ liệu và độ tương đ�
 
 | Metric | Cách tính | Vì sao phù hợp với bài toán |
 |---|---|---|
+<<<<<<< HEAD
 | **Bounding Box mAP@IoU 0.5** | Average Precision tại ngưỡng IoU $0.5$ cho 10 class object instance. | Đánh giá chính xác khả năng phát hiện vật thể rời rạc (phương tiện, người, biển báo) theo tiêu chuẩn MS-COCO / BDD100K. |
 | **Polygon mIoU (Mean IoU)** | $\text{mIoU} = \frac{\text{TP}}{\text{TP} + \text{FP} + \text{FN}}$ trung bình trên 2 class `area/drivable` và `area/alternative`. | Đo độ phủ và độ chính xác của vùng lòng đường xe ego được phép di chuyển. |
 | **Polyline Chamfer Distance** | Khoảng cách trung bình giữa các điểm trên polyline dự đoán và polyline chuẩn. | Đánh giá độ lệch tim đường và độ mượt hình học của vạch kẻ làn. |
@@ -40,9 +71,17 @@ Bảng chỉ số đo lường chất lượng dữ liệu và độ tương đ�
 - **Metric High-Risk (Critical Defect Escape Rate):**
   $$\text{Critical Escape Rate} = \frac{\text{Số lỗi Critical lọt qua bước Self-QC}}{\text{Tổng số sample review}} \times 100\%$$
   Yêu cầu bắt buộc: **$\text{Critical Escape Rate} = 0\%$** (tuyệt đối không để lọt bất kỳ lỗi Critical nào vào tập nộp cuối).
+=======
+| Decision Accuracy ($D$) | Số quyết định thuộc tính/phân loại đúng / Tổng số quyết định | Đo lường độ hiểu đúng guideline của annotator đối với các ca biên |
+| Geometry Alignment ($G$) | Tỷ lệ polyline đạt dung sai $\le 3$ px / Tổng số polyline | Đảm bảo quỹ đạo xe bám đúng tim làn, không rung lắc |
+| Critical Escape Rate ($C_{\text{escape}}$) | Số lỗi Critical lọt qua khâu Review / Tổng số lỗi Critical | Chỉ số sống còn nhằm ngăn chặn rủi ro va chạm nghiêm trọng |
+
+- **Chỉ tiêu rủi ro cao:** Critical Defect Escape Rate bắt buộc phải bằng **0%** trước khi bàn giao dữ liệu.
+>>>>>>> 02cdd5326e0beb55bcaf28193ee8968a84d847c0
 
 ## 4. Quality gate
 
+<<<<<<< HEAD
 Tiêu chuẩn nghiệm thu chất lượng bài làm:
 
 ```text
@@ -65,3 +104,18 @@ REJECT / ESCALATE if:
 
 - **Trade-off Cost vs. Risk:**
   Nhóm chấp nhận dành thêm $20\%$ thời gian sản xuất cho khâu Self-QC và Independent Review để triệt tiêu toàn bộ lỗi Critical Risk ($0\%$ escape rate). Điều này hạn chế tối đa rủi ro gây mất an toàn nguy hiểm cho mô hình điều khiển xe tự lái phía downstream, dù chi phí nhân công kiểm thử tăng nhẹ.
+=======
+```text
+PASS if:
+  - Critical Defect Escape Rate == 0%
+  - Decision Accuracy >= 90%
+  - Geometry Alignment >= 85%
+REWORK if:
+  - Decision Accuracy từ 80% đến dưới 90% HOẶC có 1 lỗi Critical do sơ suất thao tác (đã khoanh vùng được)
+REJECT / ESCALATE if:
+  - Decision Accuracy < 80% HOẶC có >= 2 lỗi Critical HOẶC phát hiện Guideline Gap mang tính hệ thống
+```
+
+**Trade-off:**
+Chấp nhận dung sai hình học rộng hơn một chút ($\le 5$ px) ở các đoạn vạch sơn quá xa (trên 60 mét ở đường chân trời) nhằm tiết kiệm chi phí thời gian dán nhãn, nhưng kiên quyết áp dụng dung sai khắt khe $\le 3$ px và 0% lỗi critical ở khoảng cách gần dưới 40 mét trước đầu xe (vùng can thiệp phanh và đánh lái khẩn cấp).
+>>>>>>> 02cdd5326e0beb55bcaf28193ee8968a84d847c0

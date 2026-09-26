@@ -1,5 +1,11 @@
 sample_id,item,values_by_annotator,diagnosis,action,rule_change
+<<<<<<< HEAD
 BDD06,vạch đứt nét màu trắng,an=single white (4 polylines nhỏ);binh=single white (1 polyline liền),guideline_gap,revise_rule,Vạch đứt nét (dashed line) phải vẽ thành 1 polyline liền duy nhất chạy qua tim các sọc sơn.
 BDD07,đèn giao thông treo ở làn rẽ trái,an=traffic light (relevant);binh=traffic light (not_relevant),data_ambiguity,add_escalation,Nêu rõ quy tắc gán nhãn tất cả đèn tín hiệu giao thông nhìn thấy được trong tầm quan sát; nếu nghi ngờ làn tác động thì tạo Issue UNCERTAIN_SCOPE.
 BDD09,xe tải bị che lấp 70% bởi rào chắn,an=truck (occluded=true);binh=ignore,execution_error,coaching,Hướng dẫn annotator Binh không bỏ sót vật thể bị che khuất nếu còn đủ bằng chứng thị giác nhận diện class.
 BDD10,vạch tam giác nhường đường tại ngã tư,an=single other;binh=ignore,guideline_gap,add_example,Bổ sung quy tắc nhãn lane/single other và hình ảnh ví dụ cho vạch tam giác nhường đường (yield line) theo quy chuẩn Qatar Road Marking.
+=======
+BDD03,laneStyle (vạch cong cao tốc),tuan=solid; long=dashed,guideline_gap,revise_rule,Quy định rõ vạch phân cách tại các đoạn cua cong cao tốc nếu là dải liên tục thì bắt buộc là solid dù có vết trám nối bê tông
+BDD06,visibility (vạch lóa kính),quynh=faded; hieu=visible,data_ambiguity,add_example,Bổ sung hình ảnh minh họa BDD06 vào guideline để làm chuẩn nhận diện hiện tượng lóa kính làm mờ vạch
+BDD10,endpoint (vạch bị xe đỗ che),dung=dừng tại đuôi xe; huyen=nối xuyên qua khoảng trống,guideline_gap,add_escalation,Quy định rõ khi vạch bị xe đỗ che khuất phải dừng tại mép xe và bật cờ needs_review nếu hướng đi tiếp theo không chắc chắn
+>>>>>>> 02cdd5326e0beb55bcaf28193ee8968a84d847c0

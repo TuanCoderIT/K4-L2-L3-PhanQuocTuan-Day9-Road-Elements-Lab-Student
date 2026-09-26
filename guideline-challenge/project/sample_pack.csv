@@ -1,4 +1,5 @@
 sample_id,split,tags,reason
+<<<<<<< HEAD
 BDD01,example,normal,Example 1: Highway daytime clear lane markings and vehicle bounding boxes
 BDD02,example,normal,Example 2: City street with pedestrians crosswalk and traffic signals
 BDD03,example,edge,Example 3: Curved highway with yellow line and alternative drivable area
@@ -14,3 +15,20 @@ BDD12,blind,edge;ambiguity,Blind 2: Ambiguous lane boundary and yield line at ci
 BDD13,blind,edge;critical,Blind 3: City street with double white line barrier and pedestrian crossing
 BDD14,blind,edge,Blind 4: Highway overcast with degraded faded lane markings
 BDD15,blind,normal,Blind 5: Standard city street daytime scene with parked vehicles
+=======
+BDD01,example,normal,Đường cao tốc ban ngày vạch đứt rõ ràng làm mẫu chuẩn
+BDD02,example,edge,Đường phố đô thị có vạch người đi bộ và vạch dừng
+BDD04,example,normal,Khu dân cư vạch phân làn tiêu chuẩn
+BDD05,example,edge;conflict,Khu vực phân nhánh split lane trên cao tốc
+BDD03,calibration,edge,Cao tốc đoạn cong vạch liền uốn lượn
+BDD06,calibration,low_visibility,Kính lái lóa sáng vạch xa mờ
+BDD07,calibration,normal,Cao tốc ban ngày trời quang vạch rõ
+BDD08,calibration,normal,Đường cao tốc nhiều làn song song
+BDD09,calibration,edge,Trời râm mát có đoạn nhập làn merge
+BDD10,calibration,edge;occlusion,Phố đông xe đỗ che khuất một phần vạch
+BDD11,blind,normal,Đường phố đô thị ban ngày vạch chuẩn
+BDD12,blind,edge;ambiguity,Vạch phân làn bị mòn mờ trên nền bê tông xám khó phân biệt
+BDD14,blind,edge;occlusion,Xe tải lớn che khuất tim vạch tại điểm nối
+BDD17,blind,critical;low_visibility,Trời mưa mặt đường ướt phản chiếu ánh sáng dễ nhận nhầm vạch
+BDD19,blind,edge,Nút giao tách làn cao tốc có vạch gore area
+>>>>>>> 02cdd5326e0beb55bcaf28193ee8968a84d847c0

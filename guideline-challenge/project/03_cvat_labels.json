@@ -1,5 +1,6 @@
 [
   {
+<<<<<<< HEAD
     "name": "pedestrian",
     "color": "#E040FB",
     "type": "rectangle",
@@ -268,5 +269,108 @@
     "color": "#D50000",
     "type": "tag",
     "attributes": []
+=======
+    "name": "lane_marking",
+    "color": "#FF6F00",
+    "type": "polyline",
+    "attributes": [
+      {
+        "name": "laneTypes",
+        "mutable": false,
+        "input_type": "select",
+        "default_value": "__undefined__",
+        "values": [
+          "__undefined__",
+          "single white",
+          "single yellow",
+          "double white",
+          "double yellow",
+          "crosswalk",
+          "road curb",
+          "single other",
+          "double other"
+        ]
+      },
+      {
+        "name": "laneStyle",
+        "mutable": false,
+        "input_type": "select",
+        "default_value": "__undefined__",
+        "values": [
+          "__undefined__",
+          "solid",
+          "dashed"
+        ]
+      },
+      {
+        "name": "laneDirection",
+        "mutable": false,
+        "input_type": "select",
+        "default_value": "__undefined__",
+        "values": [
+          "__undefined__",
+          "parallel",
+          "vertical"
+        ]
+      },
+      {
+        "name": "visibility",
+        "mutable": false,
+        "input_type": "radio",
+        "default_value": "visible",
+        "values": [
+          "visible",
+          "partially_occluded",
+          "faded",
+          "truncated"
+        ]
+      },
+      {
+        "name": "needs_review",
+        "mutable": false,
+        "input_type": "checkbox",
+        "default_value": "false",
+        "values": [
+          "false"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "image_context",
+    "color": "#AA00FF",
+    "type": "tag",
+    "attributes": [
+      {
+        "name": "weather",
+        "mutable": false,
+        "input_type": "select",
+        "default_value": "__undefined__",
+        "values": [
+          "__undefined__",
+          "clear",
+          "partly cloudy",
+          "overcast",
+          "rainy",
+          "snowy",
+          "foggy",
+          "undefined"
+        ]
+      },
+      {
+        "name": "timeofday",
+        "mutable": false,
+        "input_type": "select",
+        "default_value": "__undefined__",
+        "values": [
+          "__undefined__",
+          "daytime",
+          "dawn/dusk",
+          "night",
+          "undefined"
+        ]
+      }
+    ]
+>>>>>>> 02cdd5326e0beb55bcaf28193ee8968a84d847c0
   }
 ]
