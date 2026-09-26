@@ -1,1 +1,16 @@
 sample_id,split,tags,reason
+BDD01,example,normal,Example 1: Highway daytime clear lane markings and vehicle bounding boxes
+BDD02,example,normal,Example 2: City street with pedestrians crosswalk and traffic signals
+BDD03,example,edge,Example 3: Curved highway with yellow line and alternative drivable area
+BDD04,example,edge,Example 4: Two-way city street with double yellow line and road curb
+BDD05,calibration,normal,Calibration 1: Standard highway scene with multiple vehicles
+BDD06,calibration,edge,Calibration 2: Overcast highway with dashed white lines and high vehicle density
+BDD07,calibration,edge,Calibration 3: Highway with clear traffic lights and multiple lane boundaries
+BDD08,calibration,normal,Calibration 4: Clear daytime highway scene
+BDD09,calibration,edge,Calibration 5: Overcast highway with occluded cars
+BDD10,calibration,ambiguity,Calibration 6: City street with complex intersection markings
+BDD11,blind,normal;critical,Blind 1: City street overcast with high risk traffic light and crosswalk
+BDD12,blind,edge;ambiguity,Blind 2: Ambiguous lane boundary and yield line at city intersection
+BDD13,blind,edge;critical,Blind 3: City street with double white line barrier and pedestrian crossing
+BDD14,blind,edge,Blind 4: Highway overcast with degraded faded lane markings
+BDD15,blind,normal,Blind 5: Standard city street daytime scene with parked vehicles

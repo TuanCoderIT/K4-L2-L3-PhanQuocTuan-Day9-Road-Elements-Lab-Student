@@ -1,1 +1,13 @@
 sample_id,decision_id,expected,severity,rationale
+BDD11,d1,car x3 occluded=false,major,Ba ô tô sedan hiển thị rõ ở làn đường chính phía trước.
+BDD11,d2,traffic light x2 occluded=false,critical,Hai cụm đèn giao thông trên xà ngang điều khiển giao thông làn đường.
+BDD11,d3,geometry: polygon area/drivable ôm bám mép bó vỉa lệch <= 3px,minor,Polygon lòng đường bám khít mép bó vỉa hè không tràn lên vỉa.
+BDD12,d1,ESCALATE,critical,Vạch kẻ đường bị mờ nặng và vùng ngã tư không rõ ranh giới làn, tạo Issue UNCERTAIN_SCOPE.
+BDD12,d2,lane/single other x1,major,Vạch tam giác nhường đường (yield line) tại điểm giao cắt theo quy chuẩn Qatar.
+BDD12,d3,geometry: polyline lane/single white bám tim vạch đứt,minor,Polyline chạy bám chính xác theo tim các sọc sơn nét đứt.
+BDD13,d1,lane/double white x1,critical,Vạch đôi màu trắng nét liền phân tách làn ưu tiên/carpool, cấm đè vạch tuyệt đối.
+BDD13,d2,pedestrian x1 occluded=true,critical,Người đi bộ qua đường bị che khuất phần dưới bởi dải phân cách.
+BDD14,d1,lane/single yellow x1,major,Vạch vàng đơn nét liền ở mép trái phân chia với dải phân cách cao tốc.
+BDD14,d2,truck x1 occluded=false truncated=true,minor,Xe tải sát biên trái bị cắt một phần cản trước ngoài khung hình.
+BDD15,d1,area/drivable x1,major,Polygon mặt lòng đường xe ego di chuyển trực tiếp không đè lên xe đậu.
+BDD15,d2,area/alternative x1,minor,Polygon làn xe kế cận cùng chiều cho phép thực hiện chuyển làn an toàn.

@@ -1,1 +1,272 @@
-[]
+[
+  {
+    "name": "pedestrian",
+    "color": "#E040FB",
+    "type": "rectangle",
+    "attributes": [
+      {
+        "name": "occluded",
+        "mutable": false,
+        "input_type": "checkbox",
+        "default_value": "false",
+        "values": ["false"]
+      },
+      {
+        "name": "truncated",
+        "mutable": false,
+        "input_type": "checkbox",
+        "default_value": "false",
+        "values": ["false"]
+      }
+    ]
+  },
+  {
+    "name": "rider",
+    "color": "#7C4DFF",
+    "type": "rectangle",
+    "attributes": [
+      {
+        "name": "occluded",
+        "mutable": false,
+        "input_type": "checkbox",
+        "default_value": "false",
+        "values": ["false"]
+      },
+      {
+        "name": "truncated",
+        "mutable": false,
+        "input_type": "checkbox",
+        "default_value": "false",
+        "values": ["false"]
+      }
+    ]
+  },
+  {
+    "name": "car",
+    "color": "#00E676",
+    "type": "rectangle",
+    "attributes": [
+      {
+        "name": "occluded",
+        "mutable": false,
+        "input_type": "checkbox",
+        "default_value": "false",
+        "values": ["false"]
+      },
+      {
+        "name": "truncated",
+        "mutable": false,
+        "input_type": "checkbox",
+        "default_value": "false",
+        "values": ["false"]
+      }
+    ]
+  },
+  {
+    "name": "truck",
+    "color": "#1DE9B6",
+    "type": "rectangle",
+    "attributes": [
+      {
+        "name": "occluded",
+        "mutable": false,
+        "input_type": "checkbox",
+        "default_value": "false",
+        "values": ["false"]
+      },
+      {
+        "name": "truncated",
+        "mutable": false,
+        "input_type": "checkbox",
+        "default_value": "false",
+        "values": ["false"]
+      }
+    ]
+  },
+  {
+    "name": "bus",
+    "color": "#00E5FF",
+    "type": "rectangle",
+    "attributes": [
+      {
+        "name": "occluded",
+        "mutable": false,
+        "input_type": "checkbox",
+        "default_value": "false",
+        "values": ["false"]
+      },
+      {
+        "name": "truncated",
+        "mutable": false,
+        "input_type": "checkbox",
+        "default_value": "false",
+        "values": ["false"]
+      }
+    ]
+  },
+  {
+    "name": "train",
+    "color": "#3F51B5",
+    "type": "rectangle",
+    "attributes": [
+      {
+        "name": "occluded",
+        "mutable": false,
+        "input_type": "checkbox",
+        "default_value": "false",
+        "values": ["false"]
+      },
+      {
+        "name": "truncated",
+        "mutable": false,
+        "input_type": "checkbox",
+        "default_value": "false",
+        "values": ["false"]
+      }
+    ]
+  },
+  {
+    "name": "motorcycle",
+    "color": "#FF9100",
+    "type": "rectangle",
+    "attributes": [
+      {
+        "name": "occluded",
+        "mutable": false,
+        "input_type": "checkbox",
+        "default_value": "false",
+        "values": ["false"]
+      },
+      {
+        "name": "truncated",
+        "mutable": false,
+        "input_type": "checkbox",
+        "default_value": "false",
+        "values": ["false"]
+      }
+    ]
+  },
+  {
+    "name": "bicycle",
+    "color": "#FFEA00",
+    "type": "rectangle",
+    "attributes": [
+      {
+        "name": "occluded",
+        "mutable": false,
+        "input_type": "checkbox",
+        "default_value": "false",
+        "values": ["false"]
+      },
+      {
+        "name": "truncated",
+        "mutable": false,
+        "input_type": "checkbox",
+        "default_value": "false",
+        "values": ["false"]
+      }
+    ]
+  },
+  {
+    "name": "traffic light",
+    "color": "#FF3D00",
+    "type": "rectangle",
+    "attributes": [
+      {
+        "name": "occluded",
+        "mutable": false,
+        "input_type": "checkbox",
+        "default_value": "false",
+        "values": ["false"]
+      },
+      {
+        "name": "truncated",
+        "mutable": false,
+        "input_type": "checkbox",
+        "default_value": "false",
+        "values": ["false"]
+      }
+    ]
+  },
+  {
+    "name": "traffic sign",
+    "color": "#29B6F6",
+    "type": "rectangle",
+    "attributes": [
+      {
+        "name": "occluded",
+        "mutable": false,
+        "input_type": "checkbox",
+        "default_value": "false",
+        "values": ["false"]
+      },
+      {
+        "name": "truncated",
+        "mutable": false,
+        "input_type": "checkbox",
+        "default_value": "false",
+        "values": ["false"]
+      }
+    ]
+  },
+  {
+    "name": "area/drivable",
+    "color": "#00E676",
+    "type": "polygon",
+    "attributes": []
+  },
+  {
+    "name": "area/alternative",
+    "color": "#00B0FF",
+    "type": "polygon",
+    "attributes": []
+  },
+  {
+    "name": "lane/single white",
+    "color": "#FFFFFF",
+    "type": "polyline",
+    "attributes": []
+  },
+  {
+    "name": "lane/double white",
+    "color": "#E0E0E0",
+    "type": "polyline",
+    "attributes": []
+  },
+  {
+    "name": "lane/single yellow",
+    "color": "#FFD600",
+    "type": "polyline",
+    "attributes": []
+  },
+  {
+    "name": "lane/double yellow",
+    "color": "#FFAB00",
+    "type": "polyline",
+    "attributes": []
+  },
+  {
+    "name": "lane/road curb",
+    "color": "#A1887F",
+    "type": "polyline",
+    "attributes": []
+  },
+  {
+    "name": "lane/crosswalk",
+    "color": "#FF4081",
+    "type": "polyline",
+    "attributes": []
+  },
+  {
+    "name": "lane/single other",
+    "color": "#9E9E9E",
+    "type": "polyline",
+    "attributes": []
+  },
+  {
+    "name": "image_escalate",
+    "color": "#D50000",
+    "type": "tag",
+    "attributes": []
+  }
+]
